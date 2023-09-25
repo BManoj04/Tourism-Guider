@@ -1,62 +1,72 @@
 <%- layout("layouts/allpg.ejs") %>
+    <style>
+        .marker {
+            display: block;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            padding: 0;
+        }
 
-<style>
-    .marker {
-    display: block;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 0;
-    }
-</style>
+        .mapboxgl-popup {
+            max-width: 400px;
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+    </style>
 
-<script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
 
-<div class="container">
-<div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
-</div>
-
-
-<script>
-
-var details = JSON.parse('<%- details %>');
-console.log(details[0].id)
-mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
-const map = new mapboxgl.Map({
-    container: 'map', // container ID
-    style: 'mapbox://styles/mapbox/streets-v12', // style URL
-    center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
-    pitch: 0, // pitch in degrees
-    bearing: -80,
-    zoom: 13.5, // starting zoom
-});
-
-map.addControl(new mapboxgl.FullscreenControl());
-map.addControl(new mapboxgl.NavigationControl());
-map.addControl(new mapboxgl.ScaleControl());
-
-map.on('load', function () {
- map.flyTo({
-    zoom: 16.5,
-    pitch: 50,
-    bearing: 0,
-    duration: 3000
-    });
-});
-// const el = document.createElement('div');
-// const width = 100;
-// const height = 200;
-// el.className = 'marker';
-// el.style.backgroundImage = `url(https://placekitten.com/g/${200}/${200}/)`;
-// el.style.width = '50px';
-// el.style.height = '50px';
-// el.style.backgroundSize = '100%';
-// new mapboxgl.Marker(el)
-// .setLngLat([78.11881184577942, 9.91956309006707])
-// .addTo(map);
+    <div class="container">
+        <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
+    </div>
 
 
+    <script>
+
+        var details = JSON.parse('<%- details %>');
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v12', // style URL
+            center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
+            pitch: 0, // pitch in degrees
+            bearing: -80,
+            zoom: 13.5, // starting zoom
+        });
+
+        map.addControl(new mapboxgl.FullscreenControl());
+        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.ScaleControl());
+
+        map.on('load', function () {
+            map.flyTo({
+                zoom: 16.5,
+                pitch: 50,
+                bearing: 0,
+                duration: 3000
+            });
+        });
+
+        for (let d of details) {
+            const el = document.createElement('div');
+            const width = 100;
+            const height = 200;
+            el.className = 'marker';
+            el.style.backgroundImage = `url(https://play-lh.googleusercontent.com/9VaPNnB-Z3vMgVuKCrEbTTxqg_70IzmzrH80wjwAcTLKlnRBmYedwel8mU3KWy0gpa9z)`;
+            el.style.width = '20px';
+            el.style.height = '20px';
+            el.style.backgroundSize = '100%';
+            const popup = new mapboxgl.Popup({
+                focusAfterOpen: false
+            });
+            new mapboxgl.Marker(el)
+                .setLngLat([d.longitude, d.latitude])
+                .addTo(map)
+                .setPopup(popup.setText(d.shortDescription))
+
+        }
 
 
-</script>
+
+    </script>
