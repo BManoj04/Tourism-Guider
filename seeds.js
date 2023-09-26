@@ -11,14 +11,14 @@ mongoose.connect('mongodb://127.0.0.1:27017/Tourist')
     })
 
 const p = new detail({
-    name: "FunSpot Entertainers(Kids Play Area & VR Games)",
-    shortDescription: "FunSpot Entertainers is a video arcade, amusement center, park, indoor playground",
-    longDescription: "Most Amazing & Cheapest Game Center at Madurai with Lot of New Games also has Biggest Play Area in Madurai.Kids will have valuable time for entertainment along with parents. Most Interesting thing is Recharge Less Play More and Redeem Free Gift for Tickets. It is about 0.50 kilometers away from the Madurai Junction railway station.",
+    name: "Vishaal De Mal",
+    shortDescription: "Vishaal De Mall featuring popular retail shops & boutiques, a range of eateries & a movie theater.",
+    longDescription: "Vishaal de Mal is a shopping mall in the city of Madurai, Tamil Nadu. It is the 20th large format mall in southern Tamil Nadu and the city's first integrated multi-utility mall.The mall has theater with five Inox screens with a total capacity of 1302 (the screens have 166, 178, 350, 318, and 290 seats respectively). It has a parking capacity of about 150 cars.",
     category: "Entertainment",
-    contactInformation: "4524520240",
-    latitude: "9.927548",
-    longitude: "78.126869",
-    address: " 7th Floor Theni Anantham Readymades, No19, Junction,Thiruvenkatapuram, Goripalayam,Tamil Nadu 625002"
+    contactInformation: "09842968285",
+    latitude: "9.939351418077536",
+    longitude: "78.1357275779072",
+    address: "W4QP+8C4, Gokhale Rd, chinna chokkikulam, Madurai, Tamil Nadu 625002"
 })
 p.save().then(p => {console.log(p)})
 .catch(e => {console.log(e)})

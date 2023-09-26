@@ -17,7 +17,7 @@ const detailsSchema = new Schema({
     category:{
         type: String,
         required: true,
-        enum: ["Hotel","Entertainment","Emergency","Lodge"]
+        enum: ["Restaurants","Entertainment","Emergency","Lodge"]
     },
     contactInformation:{
         type: String,

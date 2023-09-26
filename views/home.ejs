@@ -14,59 +14,117 @@
         }
     </style>
 
+
+    <!-------------------------------------------------------------------------------->
+
+
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet'/>    
+    <link rel="stylesheet" href="css/home.css">
 
     <div class="container">
         <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
     </div>
 
+    <h2 class="fontstyle">Places You Need To See</h1>
+        <div class="property-card">
+            <a href="#">
+                <div class="property-image">
+                    <div class="property-image-title">
+                        <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+                    </div>
+                </div>
+            </a>
+            <div class="property-description">
+                <h5> Card Title </h5>
+                <p>Lorem Ipsum Dipsum hortata. Mixcall Horcho. Mixwell Chingo. More Bingo. Lorem Ipum doth be hard.</p>
+            </div>
+            <a href="#">
+                <div class="property-social-icons">
+                    <!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
+                </div>
+            </a>
+        </div>
 
-    <script>
 
-        var details = JSON.parse('<%- details %>');
-        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
-        const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
-            pitch: 0, // pitch in degrees
-            bearing: -80,
-            zoom: 13.5, // starting zoom
-        });
+        <!-------------------------------------------------------------------------------->
+        <script>
 
-        map.addControl(new mapboxgl.FullscreenControl());
-        map.addControl(new mapboxgl.NavigationControl());
-        map.addControl(new mapboxgl.ScaleControl());
-
-        map.on('load', function () {
-            map.flyTo({
-                zoom: 16.5,
-                pitch: 50,
-                bearing: 0,
-                duration: 3000
+            var details = JSON.parse(`<%- details %>`);
+            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
+            const map = new mapboxgl.Map({
+                container: 'map', // container ID
+                style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
+                pitch: 0, // pitch in degrees
+                bearing: -80,
+                zoom: 13.5, // starting zoom
             });
-        });
 
-        for (let d of details) {
-            const el = document.createElement('div');
-            const width = 100;
-            const height = 200;
-            el.className = 'marker';
-            el.style.backgroundImage = `url(https://play-lh.googleusercontent.com/9VaPNnB-Z3vMgVuKCrEbTTxqg_70IzmzrH80wjwAcTLKlnRBmYedwel8mU3KWy0gpa9z)`;
-            el.style.width = '20px';
-            el.style.height = '20px';
-            el.style.backgroundSize = '100%';
-            const popup = new mapboxgl.Popup({
-                focusAfterOpen: false
+            map.addControl(new mapboxgl.FullscreenControl());
+            map.addControl(new mapboxgl.NavigationControl());
+            map.addControl(new mapboxgl.ScaleControl());
+
+            map.on('load', function () {
+
+                const el = document.createElement('div');
+                const width = 100;
+                const height = 200;
+                el.className = 'marker';
+                el.style.backgroundImage = `url(https://media.gettyimages.com/id/484012274/photo/tourists-at-meenakshi-amman-temple-in-madurai-india.jpg?s=612x612&w=gi&k=20&c=JfSBjHObvbj1g3ZkHKQ__uzrLcnq8_ofwiHJvWwOWkI=)`;
+                el.style.width = '50px';
+                el.style.height = '50px';
+                el.style.backgroundSize = '100%';
+                new mapboxgl.Marker(el)
+                    .setLngLat([78.1193533086076, 9.919477620466882])
+                    .addTo(map)
+
+                for (let d of details) {
+                    const el = document.createElement('div');
+                    const width = 100;
+                    const height = 200;
+                    el.className = 'marker';
+                    if (d.category == "Entertainment") {
+                        el.style.backgroundColor = "blue";
+                    } else if (d.category == "Emergency") {
+                        el.style.backgroundImage = `url(https://t4.ftcdn.net/jpg/04/95/54/03/360_F_495540367_82fKakKHjfvJBZUZ1v75vCLAHyudgaCq.jpg)`;
+                    } else if (d.category == "Restaurants") {
+                        el.style.backgroundImage = `url(https://i.pinimg.com/originals/e2/29/50/e22950b0a26db427c651dccba60ab62c.png)`;
+                    } else if (d.category == "Lodge") {
+                        el.style.backgroundImage = `url(https://i.pinimg.com/736x/6e/cb/6c/6ecb6cd41f1cbbd57174788d98d8235c.jpg)`;
+                    }
+                    el.style.width = '10px';
+                    el.style.height = '10px';
+                    el.style.backgroundSize = '100%';
+                    el.setAttribute("lat", d.latitude)
+                    el.setAttribute("lon", d.longitude)
+                    const popStatement = `<strong>${d.name}</strong><br><br><p>${d.shortDescription}</p><a href='/${d._id}'>Go There<a>`
+                    const popup = new mapboxgl.Popup({
+                        focusAfterOpen: false
+                    });
+                    new mapboxgl.Marker(el)
+                        .setLngLat([d.longitude, d.latitude])
+                        .addTo(map)
+                        .setPopup(popup.setHTML(popStatement))
+                }
+
+                map.flyTo({
+                    zoom: 16.5,
+                    pitch: 50,
+                    bearing: 0,
+                    duration: 3000
+                });
+                const eles = document.getElementsByClassName("marker")
+                for (const ele of eles) {
+                    ele.addEventListener("click", function myFunction() {
+                        map.flyTo({
+                            center: [this.getAttribute("lon"), this.getAttribute("lat")],
+                            duration: 1000
+                        });
+                    });
+                }
             });
-            new mapboxgl.Marker(el)
-                .setLngLat([d.longitude, d.latitude])
-                .addTo(map)
-                .setPopup(popup.setText(d.shortDescription))
-
-        }
 
 
 
-    </script>
+        </script>

@@ -26,8 +26,9 @@ app.get("/", async (req,res)=>{
     res.render("home.ejs", { details : JSON.stringify(details) })
 })
 
-app.get("/2",(req,res)=>{
-    res.render("home2.ejs")
+app.get("/:id",(req,res)=>{
+    let id = req.params["id"]
+    res.render("place.ejs",{ id })
 })
 
 
