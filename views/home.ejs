@@ -12,6 +12,26 @@
             max-width: 400px;
             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
         }
+
+        .fontstyle {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
+        .headingstyle {
+            font-size: 40px;
+            margin-bottom: 40px;
+            margin-top: 50px;
+        }
+
+        .direction {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .card-margin {
+            margin-right: 5%;
+        }
     </style>
 
 
@@ -19,34 +39,80 @@
 
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet'/>    
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/home.css">
+
 
     <div class="container">
         <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
-    </div>
 
-    <h2 class="fontstyle">Places You Need To See</h1>
-        <div class="property-card">
-            <a href="#">
-                <div class="property-image">
-                    <div class="property-image-title">
-                        <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
-                    </div>
-                </div>
-            </a>
-            <div class="property-description">
-                <h5> Card Title </h5>
-                <p>Lorem Ipsum Dipsum hortata. Mixcall Horcho. Mixwell Chingo. More Bingo. Lorem Ipum doth be hard.</p>
+        <div class="container">
+            <h2 class="fontstyle headingstyle">Places You Need To See</h2>
+
+            <div class="direction">
+                <% for(let fav of favi) {%>
+                    <% for(dbData of dbDatas){ %>
+                        <% if(dbData._id==fav) {%>
+                            <div class="property-card card-margin">
+                                <a href="#">
+                                    <div class="property-image">
+                                        <div class="property-image-title">
+                                            <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="property-description fontstyle">
+                                    <h5>
+                                        <%= dbData.name %><br><br>
+                                    </h5>
+                                    <p>
+                                        <%= `${dbData.shortDescription}` %>
+                                    </p>
+                                </div>
+                                <a href="#">
+                                    <div class="property-social-icons">
+                                        <!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
+                                    </div>
+                                </a>
+                            </div>
+                            <% } %>
+                                <% } %>
+                                    <% } %>
             </div>
-            <a href="#">
-                <div class="property-social-icons">
-                    <!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
-                </div>
-            </a>
         </div>
+        <h2 class="fontstyle headingstyle">Places of <span style="color: #F37335;">Entertainment</span></h2>
+        <div class="direction row">
+            <% count=0 %>
+                <% for(dbData of dbDatas){ %>
 
+                    <% if(dbData.category=="Entertainment" ) {%>
+                        <% count++ %>
+                            <div class="col-1">
+                                <% hrefLink=`/${dbData._id}` %>
+                                    <a style="text-decoration: none;color: #000;" href="/" onclick="location.href=this.href+`${dbData._id}`">
+                                        <div class="card">
+                                            <div class="image"></div>
+                                            <div class="fontstyle content">
+                                                <br>
+                                                <h5>
+                                                    <%= dbData.name %>
+                                                </h5>
+                                                <br>
+                                                <p>
+                                                    <%= `${dbData.shortDescription.slice(0,150)} ...` %>
 
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                            </div>
+                            <% } %>
+                                <% } %>
+
+        </div>
         <!-------------------------------------------------------------------------------->
         <script>
 
@@ -58,7 +124,7 @@
                 center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
                 pitch: 0, // pitch in degrees
                 bearing: -80,
-                zoom: 13.5, // starting zoom
+                zoom: 11, // starting zoom
             });
 
             map.addControl(new mapboxgl.FullscreenControl());
@@ -87,11 +153,11 @@
                     if (d.category == "Entertainment") {
                         el.style.backgroundColor = "blue";
                     } else if (d.category == "Emergency") {
-                        el.style.backgroundImage = `url(https://t4.ftcdn.net/jpg/04/95/54/03/360_F_495540367_82fKakKHjfvJBZUZ1v75vCLAHyudgaCq.jpg)`;
+                        el.style.backgroundColor = "red";
                     } else if (d.category == "Restaurants") {
-                        el.style.backgroundImage = `url(https://i.pinimg.com/originals/e2/29/50/e22950b0a26db427c651dccba60ab62c.png)`;
+                        el.style.backgroundColor = "green";
                     } else if (d.category == "Lodge") {
-                        el.style.backgroundImage = `url(https://i.pinimg.com/736x/6e/cb/6c/6ecb6cd41f1cbbd57174788d98d8235c.jpg)`;
+                        el.style.backgroundColor = "black";
                     }
                     el.style.width = '10px';
                     el.style.height = '10px';
@@ -109,11 +175,12 @@
                 }
 
                 map.flyTo({
-                    zoom: 16.5,
+                    zoom: 13.5,
                     pitch: 50,
                     bearing: 0,
                     duration: 3000
                 });
+
                 const eles = document.getElementsByClassName("marker")
                 for (const ele of eles) {
                     ele.addEventListener("click", function myFunction() {

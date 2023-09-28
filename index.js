@@ -1,9 +1,9 @@
 const express =  require ("express")
 const ejsmate = require("ejs-mate")
 const path = require("path")
-const mongoose = require("mongoose")
-const jsonUtils = require("./json_utils");  
+const mongoose = require("mongoose")  
 const detail = require("./models/info")
+const favi = require("./favorits")
 const app = express()
 
 mongoose.connect('mongodb://127.0.0.1:27017/Tourist')
@@ -23,7 +23,8 @@ app.set("view engine", "ejs")
 
 app.get("/", async (req,res)=>{
     const details = await detail.find({}) 
-    res.render("home.ejs", { details : JSON.stringify(details) })
+    const dbDatas = await detail.find({})
+    res.render("home.ejs", { details : JSON.stringify(details) , favi , dbDatas })
 })
 
 app.get("/:id",(req,res)=>{
