@@ -1,15 +1,68 @@
 <%- layout("layouts/allpg.ejs") %>
 
-<!-- <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link rel="icon" type="image/svg+xml" href="https://example.com/image.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+        type="text/css">
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
-
+    <link rel="stylesheet" href="css/place.css">
     <div class="container">
         <div id='map' style='width: 100%; height: 600px; margin-top: 75px; margin-bottom: 75px;'></div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+    <!------------------------------------------------------------------------------------------------------------------------------------------------>
 
+    <div class="container" style="color: #292929;">
+        <h1 class="fontstyle d-flex align-items-center justify-content-center" tyle="color: #292929;">
+            <%= dbData.name %>
+        </h1><br><br>
+
+        <div class="row">
+            <div class="col-9" style="color: #292929;">
+                <div class="row">
+                    <p class="fontstyle">
+                        <%= dbData.shortDescription %>
+                    </p>
+                    <p class="fontstyle">
+                        <%= dbData.longDescription %>
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="fontstyle"><span style="color: #F37335;"> Contact : </span>
+                        <%= dbData.contactInformation %>
+                    </p>
+                    <p class="fontstyle"> <span style="color: #F37335;"> Go here and continue your Journey : </span>
+                        <%= dbData.address %>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="row">
+                    <p class="fontstyle" style="margin-top: 20px; color: #F37335;"> Scan the QR and Continue Your
+                        Journey from Your
+                        Moblie </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------------------------------------------------------------------------------>
     <script>
-
-        
+        var qrcode = new QRCode("qrcode",
+            "https://www.geeksforgeeks.org");
+        var details = JSON.parse(`<%- details %>`);
+        var number = '<%-id%>'
         mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
@@ -23,5 +76,54 @@
         map.addControl(new mapboxgl.FullscreenControl());
         map.addControl(new mapboxgl.NavigationControl());
         map.addControl(new mapboxgl.ScaleControl());
+        // map.addControl(
+        //     new MapboxDirections({
+        //         accessToken: mapboxgl.accessToken
+        //     }),
+        //     'top-left'
+        // );
 
-        </script> -->
+        map.on('load', function () {
+
+            // let start = document.querySelector("#mapbox-directions-origin-input > div > input[type=text]")
+            // let destination = document.querySelector("#mapbox-directions-destination-input > div > input[type=text]")
+            // for (let detail of details) {
+            //     if (detail._id == number) {
+            //         var lat = detail.latitude
+            //         var lon = detail.longitude
+            //         var address = detail.address
+            //     }
+            // }
+            // var addressid = `${lon},${lat}`
+            // destination.value = addressid
+            // start.value = "Meenakshi Amman Temple, Madurai Main, Madurai, Tamil Nadu"
+            // const event1 = new KeyboardEvent('keydown', {
+            //     key: 'Shift',
+            //     code: 'Shift',
+            //     which: 16,
+            //     keyCode: 16,
+            // });
+            // const event2 = new KeyboardEvent('keydown', {
+            //     key: 'Enter',
+            //     code: 'Enter',
+            //     which: 13,
+            //     keyCode: 13,
+            // });
+
+            // // dispatch the event on some DOM element
+            // setTimeout(() => {
+            //     start.dispatchEvent(event1);
+            //     console.log("ss")
+            // }, 500); setTimeout(() => {
+            //     start.dispatchEvent(event2); console.log("ss")
+            // }, 1000); setTimeout(() => {
+            //     destination.dispatchEvent(event1); console.log("ss")
+            // }, 1500); setTimeout(() => {
+            //     destination.dispatchEvent(event2); console.log("ss")
+            // }, 2000);
+
+
+
+
+        })
+    </script>

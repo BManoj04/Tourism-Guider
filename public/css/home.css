@@ -172,7 +172,7 @@ opacity:1;
 
 .card:hover{
   background-color: #AEE2FF;
-  transform: translateY(-90px) ;
+  transform: translateY(-110px) ;
   box-shadow: 0 0 5rem rgba(0,0,0,0.5);
 }
 

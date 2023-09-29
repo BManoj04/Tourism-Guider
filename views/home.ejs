@@ -15,7 +15,6 @@
 
         .fontstyle {
             font-family: 'Poppins', sans-serif;
-
         }
 
         .headingstyle {
@@ -52,31 +51,33 @@
         <div class="container">
             <h2 class="fontstyle headingstyle">Places You Need To See</h2>
 
-            <div class="direction">
+            <div class="direction row">
                 <% for(let fav of favi) {%>
                     <% for(dbData of dbDatas){ %>
                         <% if(dbData._id==fav) {%>
-                            <div class="property-card card-margin">
-                                <a href="#">
-                                    <div class="property-image">
-                                        <div class="property-image-title">
-                                            <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+                            <div class="col-12 col-sm-6">
+                                <div class="property-card card-margin">
+                                    <a href="#">
+                                        <div class="property-image">
+                                            <div class="property-image-title">
+                                                <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
+                                            </div>
                                         </div>
+                                    </a>
+                                    <div class="property-description fontstyle">
+                                        <h5>
+                                            <%= dbData.name %><br><br>
+                                        </h5>
+                                        <p>
+                                            <%= `${dbData.shortDescription}` %>
+                                        </p>
                                     </div>
-                                </a>
-                                <div class="property-description fontstyle">
-                                    <h5>
-                                        <%= dbData.name %><br><br>
-                                    </h5>
-                                    <p>
-                                        <%= `${dbData.shortDescription}` %>
-                                    </p>
+                                    <a href="#">
+                                        <div class="property-social-icons">
+                                            <!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
+                                        </div>
+                                    </a>
                                 </div>
-                                <a href="#">
-                                    <div class="property-social-icons">
-                                        <!-- I would usually put multipe divs inside here set to flex. Some people might use Ul li. Multiple Solutions -->
-                                    </div>
-                                </a>
                             </div>
                             <% } %>
                                 <% } %>
@@ -84,15 +85,14 @@
             </div>
         </div>
         <h2 class="fontstyle headingstyle">Places of <span style="color: #F37335;">Entertainment</span></h2>
-        <div class="direction row">
-            <% count=0 %>
-                <% for(dbData of dbDatas){ %>
-
-                    <% if(dbData.category=="Entertainment" ) {%>
-                        <% count++ %>
-                            <div class="col-1">
-                                <% hrefLink=`/${dbData._id}` %>
-                                    <a style="text-decoration: none;color: #000;" href="/" onclick="location.href=this.href+`${dbData._id}`">
+        <% function hlink(a,b){ a.setAttribute("href",`/${b}`); } %>
+            <div class="direction row">
+                <% count=0 %>
+                    <% for(dbData of dbDatas){ %>
+                        <% if(dbData.category=="Entertainment" ) {%>
+                            <% count++ %>
+                                <div class="col-1">
+                                    <a style="text-decoration: none;color: #000;" class="cardhlink" >
                                         <div class="card">
                                             <div class="image"></div>
                                             <div class="fontstyle content">
@@ -108,90 +108,103 @@
                                             </div>
                                         </div>
                                     </a>
-                            </div>
-                            <% } %>
+                                </div>
                                 <% } %>
+                                    <% } %>
 
-        </div>
-        <!-------------------------------------------------------------------------------->
-        <script>
+            </div>
+    </div>
+    <!-------------------------------------------------------------------------------->
+    <script>
 
-            var details = JSON.parse(`<%- details %>`);
-            mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
-            const map = new mapboxgl.Map({
-                container: 'map', // container ID
-                style: 'mapbox://styles/mapbox/streets-v12', // style URL
-                center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
-                pitch: 0, // pitch in degrees
-                bearing: -80,
-                zoom: 11, // starting zoom
-            });
+        var details = JSON.parse(`<%- details %>`);
 
-            map.addControl(new mapboxgl.FullscreenControl());
-            map.addControl(new mapboxgl.NavigationControl());
-            map.addControl(new mapboxgl.ScaleControl());
+        var EntertainmentList = []
+        for(let detail of details){
+            if(detail.category == "Entertainment"){EntertainmentList.push(detail._id)}
+        }
+        count =0;
+        setTimeout(() => {
+            let aList = document.getElementsByClassName("cardhlink")
+            for(let ele of aList){
+                ele.setAttribute("href",`/${EntertainmentList[count++]}`)
+            }
+        }, 500);
+        mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v12', // style URL
+            center: [78.11881184577942, 9.91956309006707], // starting position [lng, lat]
+            pitch: 0, // pitch in degrees
+            bearing: -80,
+            zoom: 11, // starting zoom
+        });
 
-            map.on('load', function () {
+        map.addControl(new mapboxgl.FullscreenControl());
+        map.addControl(new mapboxgl.NavigationControl());
+        map.addControl(new mapboxgl.ScaleControl());
 
+        map.on('load', function () {
+
+            const el = document.createElement('div');
+            const width = 100;
+            const height = 200;
+            el.className = 'marker';
+            el.style.backgroundImage = `url(https://media.gettyimages.com/id/484012274/photo/tourists-at-meenakshi-amman-temple-in-madurai-india.jpg?s=612x612&w=gi&k=20&c=JfSBjHObvbj1g3ZkHKQ__uzrLcnq8_ofwiHJvWwOWkI=)`;
+            el.style.width = '50px';
+            el.style.height = '50px';
+            el.style.backgroundSize = '100%';
+            new mapboxgl.Marker(el)
+                .setLngLat([78.1193533086076, 9.919477620466882])
+                .addTo(map)
+
+            for (let d of details) {
                 const el = document.createElement('div');
                 const width = 100;
                 const height = 200;
                 el.className = 'marker';
-                el.style.backgroundImage = `url(https://media.gettyimages.com/id/484012274/photo/tourists-at-meenakshi-amman-temple-in-madurai-india.jpg?s=612x612&w=gi&k=20&c=JfSBjHObvbj1g3ZkHKQ__uzrLcnq8_ofwiHJvWwOWkI=)`;
-                el.style.width = '50px';
-                el.style.height = '50px';
+                if (d.category == "Entertainment") {
+                    el.style.backgroundColor = "blue";
+                } else if (d.category == "Emergency") {
+                    el.style.backgroundColor = "red";
+                } else if (d.category == "Restaurants") {
+                    el.style.backgroundColor = "green";
+                } else if (d.category == "Lodge") {
+                    el.style.backgroundColor = "black";
+                }
+                el.style.width = '10px';
+                el.style.height = '10px';
                 el.style.backgroundSize = '100%';
-                new mapboxgl.Marker(el)
-                    .setLngLat([78.1193533086076, 9.919477620466882])
-                    .addTo(map)
-
-                for (let d of details) {
-                    const el = document.createElement('div');
-                    const width = 100;
-                    const height = 200;
-                    el.className = 'marker';
-                    if (d.category == "Entertainment") {
-                        el.style.backgroundColor = "blue";
-                    } else if (d.category == "Emergency") {
-                        el.style.backgroundColor = "red";
-                    } else if (d.category == "Restaurants") {
-                        el.style.backgroundColor = "green";
-                    } else if (d.category == "Lodge") {
-                        el.style.backgroundColor = "black";
-                    }
-                    el.style.width = '10px';
-                    el.style.height = '10px';
-                    el.style.backgroundSize = '100%';
-                    el.setAttribute("lat", d.latitude)
-                    el.setAttribute("lon", d.longitude)
-                    const popStatement = `<strong>${d.name}</strong><br><br><p>${d.shortDescription}</p><a href='/${d._id}'>Go There<a>`
-                    const popup = new mapboxgl.Popup({
-                        focusAfterOpen: false
-                    });
-                    new mapboxgl.Marker(el)
-                        .setLngLat([d.longitude, d.latitude])
-                        .addTo(map)
-                        .setPopup(popup.setHTML(popStatement))
-                }
-
-                map.flyTo({
-                    zoom: 13.5,
-                    pitch: 50,
-                    bearing: 0,
-                    duration: 3000
+                el.setAttribute("lat", d.latitude)
+                el.setAttribute("lon", d.longitude)
+                const popStatement = `<strong>${d.name}</strong><br><br><p>${d.shortDescription}</p><a href='/${d._id}'>Go There<a>`
+                const popup = new mapboxgl.Popup({
+                    focusAfterOpen: false
                 });
+                new mapboxgl.Marker(el)
+                    .setLngLat([d.longitude, d.latitude])
+                    .addTo(map)
+                    .setPopup(popup.setHTML(popStatement))
+            }
 
-                const eles = document.getElementsByClassName("marker")
-                for (const ele of eles) {
-                    ele.addEventListener("click", function myFunction() {
-                        map.flyTo({
-                            center: [this.getAttribute("lon"), this.getAttribute("lat")],
-                            duration: 1000
-                        });
-                    });
-                }
+            map.flyTo({
+                zoom: 13.5,
+                pitch: 50,
+                bearing: 0,
+                duration: 3000
             });
 
+            const eles = document.getElementsByClassName("marker")
+            for (const ele of eles) {
+                ele.addEventListener("click", function myFunction() {
+                    map.flyTo({
+                        center: [this.getAttribute("lon"), this.getAttribute("lat")],
+                        duration: 1000
+                    });
+                });
+            }
+        });
 
 
-        </script>
+
+    </script>
