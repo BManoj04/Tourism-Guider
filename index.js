@@ -29,7 +29,7 @@ app.get("/", async (req,res)=>{
 
 app.get("/:id",async(req,res)=>{
     let id = req.params["id"].toString()
-    const details = await detail.find({})
+    const details = await detail.findOne({_id:id})
     const dbData = await detail.findOne({_id:id})
     res.render("place.ejs",{ details : JSON.stringify(details), id ,dbData})
 })

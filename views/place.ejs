@@ -42,14 +42,13 @@
                         <%= dbData.address %>
                     </p>
                 </div>
-
             </div>
             <div class="col">
                 <div class="row">
-                    <div id="qrcode"></div>
+                    <div id="qrcode" style="margin-left: 50px;"></div>
                 </div>
                 <div class="row">
-                    <p class="fontstyle" style="margin-top: 20px; color: #F37335;"> Scan the QR and Continue Your
+                    <p class="fontstyle" style="margin-top: 20px; color: #F37335;margin-left: 50px;"> Scan the QR and Continue Your
                         Journey from Your
                         Moblie </p>
                 </div>
@@ -59,8 +58,9 @@
 
     <!------------------------------------------------------------------------------------------------------------------------------------------------>
     <script>
+        var details = JSON.parse(`<%- details %>`);
         var qrcode = new QRCode("qrcode",
-            "https://www.geeksforgeeks.org");
+            `${details._id}`);
         var details = JSON.parse(`<%- details %>`);
         var number = '<%-id%>'
         mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
