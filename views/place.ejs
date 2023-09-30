@@ -60,7 +60,7 @@
     <script>
         var details = JSON.parse(`<%- details %>`);
         var qrcode = new QRCode("qrcode",
-            `${details._id}`);
+            `${details.qrcode}`);
         var details = JSON.parse(`<%- details %>`);
         var number = '<%-id%>'
         mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';

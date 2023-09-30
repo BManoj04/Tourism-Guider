@@ -34,6 +34,9 @@ const detailsSchema = new Schema({
     address:{
         type: String,
         required: true
+    },
+    qrcode:{
+        type: String,
     }
 })
 

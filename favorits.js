@@ -1,3 +1,3 @@
-favList = ["65129b61d6d231bd0f5ea1ba","65129c4a5d5c40ef2c4efef1"]
+favList = ["6517c0e55e020df15a534957","6517c147716d4391d6863775","6517c1bc4879c9f599b14321"]
 
 module.exports = favList;
