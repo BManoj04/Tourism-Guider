@@ -1,18 +1,20 @@
-const express =  require ("express")
+const express = require("express")
 const ejsmate = require("ejs-mate")
 const path = require("path")
-const mongoose = require("mongoose")  
+const mongoose = require("mongoose")
 const detail = require("./models/info")
 const favi = require("./favorits")
 const app = express()
-https://dribbble.com/
-mongoose.connect('mongodb://127.0.0.1:27017/Tourist')
-.then(() =>{
-    console.log("Mongo connected")
-})
-.catch(err => {
-    console.log("Mongooes error")
-})
+
+
+
+mongoose.connect('mongodb+srv://bmanoj2364:4aRJf1K7VMM4krjd@cluster.pbdvqaq.mongodb.net/')
+    .then(() => {
+        console.log("Mongo connected")
+    })
+    .catch(err => {
+        console.log("Mongooes error")
+    })
 
 app.use(express.static(path.join(__dirname, "public")))
 
@@ -21,21 +23,22 @@ app.set("view engine", "ejs")
 
 // <----------------------------------------------------------------------------------->
 
-app.get("/", async (req,res)=>{
-    const details = await detail.find({}) 
+app.get("/", async (req, res) => {
+    //let conn = await connect()
+    const details = await detail.find({})
     const dbDatas = await detail.find({})
-    res.render("home.ejs", { details : JSON.stringify(details) , favi , dbDatas })
+    res.render("home.ejs", { details: JSON.stringify(details), favi, dbDatas })
 })
 
-app.get("/:id",async(req,res)=>{
+app.get("/:id", async (req, res) => {
     let id = req.params["id"].toString()
-    const details = await detail.findOne({_id:id})
-    const dbData = await detail.findOne({_id:id})
-    res.render("place.ejs",{ details : JSON.stringify(details), id ,dbData})
+    const details = await detail.findOne({ _id: id })
+    const dbData = await detail.findOne({ _id: id })
+    res.render("place.ejs", { details: JSON.stringify(details), id, dbData })
 })
-app.use(() =>{
+app.use(() => {
     console.log("manoj")
 })
 
-app.listen(3000,()=>{
+app.listen(3000, () => {
 })

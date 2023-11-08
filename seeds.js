@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
 const detail = require("./models/info")
+//mongodb://127.0.0.1:27017/Tourist
 
-
-mongoose.connect('mongodb://127.0.0.1:27017/Tourist')
+mongoose.connect('mongodb+srv://bmanoj2364:4aRJf1K7VMM4krjd@cluster.pbdvqaq.mongodb.net/')
     .then(() =>{
         console.log("Mongo connected")
     })

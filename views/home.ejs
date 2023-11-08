@@ -1,4 +1,5 @@
 <%- layout("layouts/allpg.ejs") %>
+
     <style>
         .marker {
             display: block;
@@ -51,13 +52,13 @@
         <div class="container">
             <h2 class="fontstyle headingstyle">Places You Need To See</h2>
             <div class="direction row">
-                
+
                 <% for(let fav of favi) {%>
                     <% for(dbData of dbDatas){ %>
                         <% if(dbData._id==fav) {%>
                             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                                <div class="property-card card-margin" style="margin-bottom: 10%;">
-                                    <a href="#">
+                                <div class="property-card card-margin card-fav" style="margin-bottom: 10%;">
+                                    <a class="card-fav">
                                         <div class="property-image">
                                             <div class="property-image-title">
                                                 <!-- Optional <h5>Card Title</h5> If you want it, turn on the CSS also. -->
@@ -85,61 +86,92 @@
             </div>
         </div>
         <h2 class="fontstyle headingstyle">Places of <span style="color: #F37335;">Entertainment</span></h2>
-            <div class="direction row">
-                <% count=0 %>
-                    <% for(dbData of dbDatas){ %>
-                        <% if(dbData.category=="Entertainment" ) {%>
-                            <% count++ %>
-                                <div class="col-1">
-                                    <a style="text-decoration: none;color: #000;" class="cardhlink-1" >
-                                        <div class="card" onmouseover="this.style.backgroundColor='#AEE2FF'" onmouseout="this.style.backgroundColor='';">
-                                            <div class="image"></div>
-                                            <div class="fontstyle content">
-                                                <br>
-                                                <h5>
-                                                    <%= dbData.name %>
-                                                </h5>
-                                                <br>
-                                                <p>
-                                                    <%= `${dbData.shortDescription.slice(0,150)} ...` %>
+        <div class="direction row">
+            <% count=0 %>
+                <% for(dbData of dbDatas){ %>
+                    <% if(dbData.category=="Entertainment" ) {%>
+                        <% count++ %>
+                            <div class="col-1">
+                                <a style="text-decoration: none;color: #000;" class="cardhlink-1">
+                                    <div class="card" onmouseover="this.style.backgroundColor='#AEE2FF'"
+                                        onmouseout="this.style.backgroundColor='';">
+                                        <div class="image"></div>
+                                        <div class="fontstyle content">
+                                            <br>
+                                            <h5>
+                                                <%= dbData.name %>
+                                            </h5>
+                                            <br>
+                                            <p>
+                                                <%= `${dbData.shortDescription.slice(0,150)} ...` %>
 
-                                                </p>
-                                            </div>
+                                            </p>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <% } %>
                                 <% } %>
-                                    <% } %>
 
-            </div>
-            <h2 class="fontstyle headingstyle">Places of <span style="color: #F37335;">Entertainment</span></h2>
-            <div class="direction row">
-                <% count=0 %>
-                    <% for(dbData of dbDatas){ %>
-                        <% if(dbData.category=="Restaurants" ) {%>
-                            <% count++ %>
-                                <div class="col-1">
-                                    <a style="text-decoration: none;color: #000;" class="cardhlink-2" >
-                                        <div class="card" onmouseover="this.style.backgroundColor='#B3FFAE'" onmouseout="this.style.backgroundColor='';">
-                                            <div class="image"></div>
-                                            <div class="fontstyle content">
-                                                <br>
-                                                <h5>
-                                                    <%= dbData.name %>
-                                                </h5>
-                                                <br>
-                                                <p>
-                                                    <%= `${dbData.shortDescription.slice(0,150)} ...` %>
+        </div>
+        <h2 class="fontstyle headingstyle"><span style="color: green;">Need Restaurant ? </span>Explore here</h2>
+        <div class="direction row">
+            <% count=0 %>
+                <% for(dbData of dbDatas){ %>
+                    <% if(dbData.category=="Restaurants" ) {%>
+                        <% count++ %>
+                            <div class="col-1">
+                                <a style="text-decoration: none;color: #000;" class="cardhlink-2">
+                                    <div class="card" onmouseover="this.style.backgroundColor='#B3FFAE'"
+                                        onmouseout="this.style.backgroundColor='';">
+                                        <div class="image"></div>
+                                        <div class="fontstyle content">
+                                            <br>
+                                            <h5>
+                                                <%= dbData.name %>
+                                            </h5>
+                                            <br>
+                                            <p>
+                                                <%= `${dbData.shortDescription.slice(0,150)} ...` %>
 
-                                                </p>
-                                            </div>
+                                            </p>
                                         </div>
-                                    </a>
-                                </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <% } %>
                                 <% } %>
-                                    <% } %>
 
-            </div>
+        </div>
+        <h2 class="fontstyle headingstyle"><span style="color: orange;">Wanna a Rest ??? </span></h2>
+        <div class="direction row">
+            <% count=0 %>
+                <% for(dbData of dbDatas){ %>
+                    <% if(dbData.category=="Lodge" ) {%>
+                        <% count++ %>
+                            <div class="col-1">
+                                <a style="text-decoration: none;color: #000;" class="cardhlink-3">
+                                    <div class="card" onmouseover="this.style.backgroundColor='#FFD966'"
+                                        onmouseout="this.style.backgroundColor='';">
+                                        <div class="image"></div>
+                                        <div class="fontstyle content">
+                                            <br>
+                                            <h5>
+                                                <%= dbData.name %>
+                                            </h5>
+                                            <br>
+                                            <p>
+                                                <%= `${dbData.shortDescription.slice(0,150)} ...` %>
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <% } %>
+                                <% } %>
+
+        </div>
     </div>
     <!-------------------------------------------------------------------------------->
     <script>
@@ -147,16 +179,48 @@
         var details = JSON.parse(`<%- details %>`);
 
         var EntertainmentList = []
-        for(let detail of details){
-            if(detail.category == "Entertainment"){EntertainmentList.push(detail._id)}
+        for (let detail of details) {
+            if (detail.category == "Entertainment") { EntertainmentList.push(detail._id) }
         }
-        count =0;
+        count = 0;
         setTimeout(() => {
             let aList = document.getElementsByClassName("cardhlink-1")
-            for(let ele of aList){
-                ele.setAttribute("href",`/${EntertainmentList[count++]}`)
+            for (let ele of aList) {
+                ele.setAttribute("href", `/${EntertainmentList[count++]}`)
             }
         }, 500);
+        var RestaurantsList = []
+        for (let detail of details) {
+            if (detail.category == "Restaurants") { RestaurantsList.push(detail._id) }
+        }
+        count2 = 0;
+        setTimeout(() => {
+            let bList = document.getElementsByClassName("cardhlink-2")
+            for (let ele of bList) {
+                ele.setAttribute("href", `/${RestaurantsList[count2++]}`)
+            }
+        }, 500);
+        var LodgeList = []
+        for (let detail of details) {
+            if (detail.category == "Lodge") { LodgeList.push(detail._id) }
+        }
+        count3 = 0;
+        setTimeout(() => {
+            let aList = document.getElementsByClassName("cardhlink-3")
+            for (let ele of aList) {
+                ele.setAttribute("href", `/${LodgeList[count3++]}`)
+            }
+        }, 500);
+        // var favorite = "`<%- favi %>`"
+        // var favList = JSON.parse("[" + favorite + "]");
+        // console.log(favList)
+        // count4 =0;
+        // setTimeout(() => {
+        //     let aList = document.getElementsByClassName("card-fav")
+        //     for(let ele of aList){
+        //         ele.setAttribute("href",`/${favList[count4++]}`)
+        //     }
+        // }, 500);
         mapboxgl.accessToken = 'pk.eyJ1Ijoia2FydGhpa2V5YW5iYWxhamkiLCJhIjoiY2t2dGd3YmVnM2NrajJudGt1eHdscWVqMyJ9.A0jCxbqQ2SvjO8TVEz2Hxg';
         const map = new mapboxgl.Map({
             container: 'map', // container ID
@@ -213,7 +277,6 @@
                     .addTo(map)
                     .setPopup(popup.setHTML(popStatement))
             }
-
             map.flyTo({
                 zoom: 13.5,
                 pitch: 50,
